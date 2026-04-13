@@ -1,0 +1,53 @@
+import heapq
+goal = (1, 2, 3, 4, 5, 6, 7, 8, 0)
+def manhattan(state):
+distance = 0
+for i in range(1, 9):
+x1, y1 = divmod(state.index(i), 3)
+x2, y2 = divmod(goal.index(i), 3)
+distance += abs(x1 - x2) + abs(y1 - y2)
+return distance
+def print_board(state):
+for i in range(0, 9, 3):
+row = ""
+for j in range(3):
+val = state[i + j]
+row += " _ " if val == 0 else f" {val} "
+print(row)
+print()
+def astar(start):
+frontier = []
+
+heapq.heappush(frontier, (manhattan(start), 0, start, []))
+explored = set()
+while frontier:
+f, g, state, path = heapq.heappop(frontier)
+if state == goal:
+return path + [state]
+explored.add(state)
+zero = state.index(0)
+moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+x, y = divmod(zero, 3)
+for dx, dy in moves:
+nx, ny = x + dx, y + dy
+if 0 <= nx < 3 and 0 <= ny < 3:
+new = list(state)
+swap = nx * 3 + ny
+new[zero], new[swap] = new[swap], new[zero]
+new = tuple(new)
+if new not in explored:
+heapq.heappush(frontier, (g + 1 + manhattan(new), g + 1, new, path +
+[state]))
+return None
+start = (1, 2, 3, 4, 5, 6, 0, 7, 8)
+solution = astar(start)
+if solution:
+print(f"Solved in {len(solution) - 1} step(s)\n")
+for i, state in enumerate(solution):
+if i == 0:
+print(f"--- Initial State ---")
+else:
+print(f"--- Step {i} ---")
+print_board(state)
+else:
+print("No solution found.")
