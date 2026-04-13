@@ -1,0 +1,15 @@
+step = 0 # <-- Added: step counter
+def hanoi(n, source, target, aux):
+global step
+if n == 1:
+step += 1
+print(f"Step {step}: Move disk 1 from {source} to {target}")
+return
+hanoi(n - 1, source, aux, target)
+step += 1
+print(f"Step {step}: Move disk {n} from {source} to {target}")
+hanoi(n - 1, aux, target, source)
+print("=== Tower of Hanoi (3 disks) ===")
+print("Pegs: A (Source) | B (Auxiliary) | C (Target)\n")
+hanoi(3, 'A', 'C', 'B')
+print(f"\nTotal steps: {step}")
