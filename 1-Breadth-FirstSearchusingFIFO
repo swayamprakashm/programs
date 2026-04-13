@@ -1,0 +1,18 @@
+from collections import deque
+def bfs(graph, start, goal):
+frontier = deque([[start]])
+explored = set()
+while frontier:
+path = frontier.popleft()
+node = path[-1]
+print(f"Current Node: {node} | Path so far: {path}") # <-- Added
+if node == goal:
+return path
+if node not in explored:
+explored.add(node)
+for neighbor in graph[node]:
+frontier.append(path + [neighbor])
+return None
+graph = { 'A': ['B', 'C'], 'B': ['D', 'E'], 'C': ['F'], 'D': [], 'E': ['G'], 'F': [], 'G': [] }
+result = bfs(graph, 'A', 'G')
+print("\nFinal BFS Path:", result)
