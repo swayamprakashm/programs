@@ -1,0 +1,13 @@
+Write a Python program to demonstrate Monkey Banana Problem using (State-Space Search)
+def monkey_banana():
+    monkey = input("Enter monkey position: ")
+    box = input("Enter box position: ")
+    banana = input("Enter banana position: ")
+    state = {"monkey": monkey, "box": box, "banana": banana, "has": False}
+    print("Initial State:", state)
+    state["monkey"] = state["box"]
+    state["box"] = state["banana"]
+    state["monkey"] = state["banana"]
+    state["has"] = True
+    print("Goal Achieved:", state)
+monkey_banana()
