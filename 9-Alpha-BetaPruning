@@ -1,0 +1,30 @@
+import math
+def alphabeta(node, depth, alpha, beta, maximizing):
+if depth == 0 or isinstance(node, int):
+return node
+if maximizing:
+value = -math.inf
+for child in node:
+value = max(value, alphabeta(child, depth - 1, alpha, beta, False))
+alpha = max(alpha, value)
+print(f"MAX | Value: {value} | Alpha: {alpha} | Beta: {beta}", end="")
+if alpha >= beta:
+print(" | Pruned!")
+break
+print()
+return value
+else:
+value = math.inf
+for child in node:
+value = min(value, alphabeta(child, depth - 1, alpha, beta, True))
+beta = min(beta, value)
+print(f"MIN | Value: {value} | Alpha: {alpha} | Beta: {beta}", end="")
+if beta <= alpha:
+print(" | Pruned!")
+break
+print()
+return value
+tree = [[3, 5], [6, 9]]
+print(f"Tree: {tree}\n")
+result = alphabeta(tree, 2, -math.inf, math.inf, True)
+print(f"\nOptimal Value: {result}")
