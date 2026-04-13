@@ -1,0 +1,21 @@
+from collections import deque
+def water_jug(cap1,cap2,target):
+visited=set()
+queue=deque([((0,0),[])])
+while queue:
+(x,y),path=queue.popleft()
+if x==target or y==target:
+return path+[(x,y)]
+if (x,y) in visited:
+continue
+visited.add((x,y))
+next_states=[
+(cap1,y),(x,cap2),
+(0,y),(x,0),
+(min(cap1,x+y),y-(min(cap1,x+y)-x)),
+(x-(min(cap2,x+y)-y),min(cap2,x+y))
+]
+for state in next_states:
+queue.append((state,path+[(x,y)]))
+result=water_jug(4,3,2)
+print("Solution Path:",result)
