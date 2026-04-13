@@ -1,0 +1,21 @@
+import itertools
+def tsp(graph,start):
+nodes=list(graph.keys())
+nodes.remove(start)
+min_cost=float('inf')
+best_path=None
+for perm in itertools.permutations(nodes):
+cost=0
+curr=start
+for node in perm:
+cost+=graph[curr][node]
+curr=node
+cost+=graph[curr][start]
+if cost<min_cost:
+min_cost=cost
+best_path=(start,)+perm+(start,)
+return best_path,min_cost
+graph={ 'A':{'B':10,'C':15,'D':20}, 'B':{'A':10,'C':35,'D':25}, 'C':{'A':15,'B':35,'D':30},
+'D':{'A':20,'B':25,'C':30} }
+path,cost=tsp(graph,'A')
+print("Best Path:",path, " and Total Cost is:", cost)
